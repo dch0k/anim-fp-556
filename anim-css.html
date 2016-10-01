@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ITMD-4/565 Lab 3 - Canvas Drawing</title>
+    <style type="text/css">
+        #content-wrapper {
+            width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        #canvasRun {
+            background-color: #c00;
+            border: 0;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content-wrapper">
+        <button id="canvasRun">Draw Canvas</button>
+        <br>
+        <br>
+        <canvas id="myCanvas" width="600" height="450"></canvas>
+    </div>
+    <script type="text/javascript">
+        var btnDraw = document.getElementById("canvasRun");
+        btnDraw.addEventListener("click", function() {
+            var canvas = document.getElementById("myCanvas");
+            var cntx = canvas.getContext("2d");
+            var arcDeg = 0;
+            var sqrDeg = 0;
+            setInterval(function() {
+                cntx.setLineDash([0]);
+                satLogo();
+                cntx.clearRect(0, 0, 600, 450);
+                linearGrad();
+                txtHead();
+                headLine();
+                tirangle();
+                myName();
+                whiteRect();
+                circle();
+
+                // rotate arc
+                arcDeg = arcDeg + 0.15;
+                cntx.beginPath();
+                cntx.save();
+                cntx.arc(280, 150, 65, ((Math.PI * 1.5) + arcDeg), ((Math.PI * 0.25) + arcDeg));
+                cntx.lineWidth = 18;
+                cntx.strokeStyle = '#FFA500';
+                cntx.stroke();
+                cntx.restore();
+
+                //rotate square
+                sqrDeg += 1;
+                cntx.beginPath();
+                cntx.save();
+                cntx.translate(480, 150);
+                cntx.rotate((Math.PI / 180) * sqrDeg);
+                cntx.translate(-480, -150);
+                cntx.rect(420, 90, 120, 120);
+                cntx.fillStyle = '#C80000';
+                cntx.fill();
+                cntx.lineWidth = 6;
+                cntx.strokeStyle = '#FFFFFF';
+                cntx.stroke();
+                cntx.restore();
+
+                dotCurve();
+            }, 24);
+
+            //linear gradient Canvas    
+            function linearGrad() {
+
+                var grd = cntx.createLinearGradient(0, 450, 0, 0);
+                grd.addColorStop(0, "#000000");
+                grd.addColorStop(1, "#FFFFFF");
+                cntx.fillStyle = grd;
+                cntx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+
+            //Text heading
+            function txtHead() {
+
+                cntx.font = "32px sans-serif";
+                cntx.fillStyle = "#C80000";
+                cntx.fillText("ITMD 565 Canvas Lab", 140, 40);
+            }
+
+            //Heading Underline
+            function headLine() {
+
+                cntx.beginPath();
+                cntx.moveTo(10, 55);
+                cntx.lineTo(590, 55);
+                cntx.lineWidth = 2.5;
+                cntx.strokeStyle = "#C80000";
+                cntx.stroke();
+            }
+
+            //circle
+            function circle() {
+
+                cntx.beginPath();
+                cntx.arc(100, 150, 60, 0, 2 * Math.PI);
+                cntx.fillStyle = '#0000C8';
+                cntx.fill();
+                cntx.lineWidth = 3;
+                cntx.strokeStyle = '#FFFFFF';
+                cntx.stroke();
+            }
+
+            //triangle 
+            function tirangle() {
+
+                cntx.beginPath();
+                cntx.moveTo(100, 250);
+                cntx.lineTo(40, 350);
+                cntx.lineTo(160, 350);
+                cntx.closePath();
+                cntx.fillStyle = "#00C800";
+                cntx.fill();
+            }
+
+            //Name and Email
+            function myName() {
+
+                cntx.font = "14px sans-serif";
+                cntx.fillStyle = "#FFFFFF";
+                cntx.fillText("Chakravarty Dara", 20, 400);
+                cntx.fillText("cdara@hawk.iit.edu", 20, 420);
+            }
+
+            //White rectangle
+            function whiteRect() {
+                cntx.beginPath();
+                cntx.rect(280, 250, 300, 100);
+                cntx.fill();
+            }
+
+            //dotted curve
+            function dotCurve() {
+                cntx.beginPath();
+                cntx.setLineDash([8]);
+                cntx.lineWidth = 2;
+                cntx.moveTo(300, 297);
+                cntx.quadraticCurveTo(365, 245, 430, 300);
+                cntx.moveTo(432, 302);
+                cntx.quadraticCurveTo(495, 350, 560, 297);
+                cntx.strokeStyle = "#000000";
+                cntx.stroke();
+
+            }
+
+            //SAT image
+            function satLogo() {
+                var img = new Image();
+                img.addEventListener("load", function() {
+                    cntx.drawImage(img, 340, 365, 240, 60);
+                });
+                img.src = "IIT_SAT_stack_186_white.png";
+            }
+        });
+    </script>
+</body>
+
+</html>
